@@ -1,0 +1,41 @@
+include       /etc/nginx/mime.types;
+default_type  application/octet-stream;
+
+log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                    '$status $body_bytes_sent "$http_referer" '
+                    '"$http_user_agent" "$http_x_forwarded_for"';
+
+access_log  /var/log/nginx/access.log  main;
+
+sendfile        on;
+#tcp_nopush     on;
+
+keepalive_timeout  65;
+
+#gzip  on;
+
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        server_name _;
+        return 301 https://$host$request_uri;
+}
+
+server {
+    listen 127.0.0.1:1443 ssl;
+    server_name ${DOMAIN};
+
+    ssl_certificate /etc/ssl/${CERTIFICATE_FILENAME};
+    ssl_certificate_key /etc/ssl/${PRIVATEKEY_FILENAME};
+    
+    resolver 127.0.0.11;
+    location / {
+            set $target web;
+            proxy_pass http://$target:5000;
+            proxy_http_version 1.1;
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}

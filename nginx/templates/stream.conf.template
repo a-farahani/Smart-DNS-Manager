@@ -1,0 +1,22 @@
+log_format basic '$remote_addr [$time_local] '
+                '$protocol $status $bytes_sent $bytes_received '
+                '$session_time';
+
+access_log /var/log/nginx/stream-access.log basic buffer=32k;
+
+
+map $ssl_preread_server_name $name {
+        default     $ssl_preread_server_name:443;
+        ${DOMAIN}   dns;
+}
+
+upstream dns {
+        server 127.0.0.1:1443;
+}
+
+server {
+        resolver 1.1.1.1 ipv6=off;
+        listen 443;
+        ssl_preread on;
+        proxy_pass $name;
+}

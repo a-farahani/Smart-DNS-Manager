@@ -82,7 +82,7 @@ Once the services are up, the application should be accessible at https://your-d
 
 Once the application is running, you can manage the DNS records through the web interface.
 
-1. **Access the Web Interface**: Open your browser and navigate to `https://your-domain.com/login`.
+1. **Access the Web Interface**: Open your browser and navigate to `https://your-domain.com`.
 
 2. **Login**: Use the credentials defined in the `.env.web` file:
    - Username: `admin`

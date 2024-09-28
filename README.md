@@ -10,6 +10,12 @@ SmartDNS Manager is a web-based interface to manage your Smart DNS service using
 - Authentication for secure access.
 - Easy to deploy using Docker and Docker Compose.
 
+## Screenshots
+
+![Login Page](images/login-page.png)
+
+![Main Page](images/main-page.png)
+
 ## Requirements
 
 - A Linux VPS

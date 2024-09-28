@@ -70,7 +70,8 @@ Place your SSL certificates in the ssl directory, replacing fullchain.pem and pr
 ### 7. Start the Project
 
 ```bash
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 ### 8. Start the Project
